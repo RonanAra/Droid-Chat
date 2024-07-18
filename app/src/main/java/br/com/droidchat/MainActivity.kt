@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import br.com.droidchat.navigation.ChatNavHost
+import br.com.droidchat.ui.ChatApp
 import br.com.droidchat.ui.theme.DroidChatTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,7 +13,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DroidChatTheme {
-                ChatNavHost()
+                ChatApp()
             }
         }
     }
