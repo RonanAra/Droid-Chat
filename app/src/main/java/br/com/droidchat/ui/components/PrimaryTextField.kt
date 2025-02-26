@@ -95,7 +95,8 @@ fun PrimaryTextField(
             Text(
                 text = it,
                 modifier = Modifier.padding(4.dp),
-                color = MaterialTheme.colorScheme.error
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.labelMedium
             )
         }
     }
