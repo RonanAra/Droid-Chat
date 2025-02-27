@@ -21,12 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.droidchat.R
 import br.com.droidchat.ui.theme.DroidChatTheme
+import br.com.droidchat.utils.extensions.passwordTransformation
 
 @Composable
 fun PrimaryTextField(
@@ -71,10 +70,7 @@ fun PrimaryTextField(
                 }
             },
             singleLine = singleLine,
-            visualTransformation = if (isKeyBoardTypePassword) {
-                if (passwordVisibility) VisualTransformation.None
-                else PasswordVisualTransformation()
-            } else VisualTransformation.None,
+            visualTransformation = keyboardType.passwordTransformation(passwordVisibility),
             placeholder = { Text(text = placeHolder) },
             shape = CircleShape,
             colors = OutlinedTextFieldDefaults.colors(
