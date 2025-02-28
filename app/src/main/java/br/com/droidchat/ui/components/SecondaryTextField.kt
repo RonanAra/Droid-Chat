@@ -104,7 +104,7 @@ private fun SecondaryTextFieldContent(
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 Row(
-                    modifier = Modifier .bottomBorder(
+                    modifier = Modifier.bottomBorder(
                         color = Color.Black,
                         strokeWidth = 2.dp
                     ),
