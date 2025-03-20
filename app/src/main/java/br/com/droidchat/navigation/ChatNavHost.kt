@@ -7,6 +7,7 @@ import br.com.droidchat.navigation.ChatAppDestinations.SignInRoute
 import br.com.droidchat.navigation.ChatAppDestinations.SignUpRoute
 import br.com.droidchat.navigation.ChatAppDestinations.SplashRoute
 import br.com.droidchat.ui.feature.signin.SignInRoute
+import br.com.droidchat.ui.feature.signup.SignUpRoute
 import br.com.droidchat.ui.feature.splash.SplashRoute
 import br.com.droidchat.utils.extensions.commonNavComposable
 import br.com.droidchat.utils.extensions.navigateWithPopUp
@@ -37,7 +38,7 @@ fun ChatNavHost() {
         }
 
         commonNavComposable<SignUpRoute> {
-
+            SignUpRoute()
         }
     }
 }
