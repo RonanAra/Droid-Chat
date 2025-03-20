@@ -105,8 +105,8 @@ private fun SecondaryTextFieldContent(
                 )
                 Row(
                     modifier = Modifier.bottomBorder(
-                        color = Color.Black,
-                        strokeWidth = 2.dp
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        strokeWidth = 1.dp
                     ),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
