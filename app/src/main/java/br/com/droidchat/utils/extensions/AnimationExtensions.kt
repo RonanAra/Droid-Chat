@@ -6,16 +6,20 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.navigation.NavBackStackEntry
 
-fun AnimatedContentTransitionScope<NavBackStackEntry>.baseInSlideIntoContainer(): EnterTransition {
+fun AnimatedContentTransitionScope<NavBackStackEntry>.slidInTo(
+    direction: AnimatedContentTransitionScope.SlideDirection,
+): EnterTransition {
     return slideIntoContainer(
         animationSpec = tween(300),
-        towards = AnimatedContentTransitionScope.SlideDirection.Right
+        towards = direction
     )
 }
 
-fun AnimatedContentTransitionScope<NavBackStackEntry>.baseOutSlideIntoContainer(): ExitTransition {
-    return  slideOutOfContainer(
+fun AnimatedContentTransitionScope<NavBackStackEntry>.slidOutTo(
+    direction: AnimatedContentTransitionScope.SlideDirection,
+): ExitTransition {
+    return slideOutOfContainer(
         animationSpec = tween(300),
-        towards = AnimatedContentTransitionScope.SlideDirection.Left
+        towards = direction
     )
 }
