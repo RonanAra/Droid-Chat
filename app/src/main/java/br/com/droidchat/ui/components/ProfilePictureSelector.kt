@@ -1,6 +1,7 @@
 package br.com.droidchat.ui.components
 
 import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -25,9 +26,10 @@ import coil.compose.AsyncImage
 fun ProfilePictureSelector(
     modifier: Modifier = Modifier,
     imageUri: Uri? = null,
+    onClick: () -> Unit
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.clickable { onClick() },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(
@@ -53,6 +55,6 @@ fun ProfilePictureSelector(
 @Composable
 private fun Preview() {
     DroidChatTheme {
-        ProfilePictureSelector()
+        ProfilePictureSelector(onClick = {})
     }
 }
