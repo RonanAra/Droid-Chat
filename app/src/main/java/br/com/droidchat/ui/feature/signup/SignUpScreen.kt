@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.droidchat.R
 import br.com.droidchat.ui.components.PrimaryButton
+import br.com.droidchat.ui.components.ProfilePictureSelector
 import br.com.droidchat.ui.components.SecondaryTextField
 import br.com.droidchat.ui.theme.BackgroundGradient
 import br.com.droidchat.ui.theme.DroidChatTheme
@@ -70,7 +71,13 @@ fun SignUpScreen() {
 
 @Composable
 fun SignUpContent() {
-    Column(Modifier.padding(16.dp)) {
+    Column(
+        modifier = Modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        ProfilePictureSelector()
+
+        Spacer(Modifier.height(30.dp))
 
         SecondaryTextField(
             label = stringResource(R.string.feature_sign_up_first_name),
