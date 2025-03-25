@@ -2,6 +2,9 @@
 
 package br.com.droidchat.ui.components
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
@@ -35,8 +38,17 @@ import br.com.droidchat.ui.theme.DroidChatTheme
 fun ProfilePictureOptionsModalBottomSheet(
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit,
+    onPictureSelected: (Uri) -> Unit = {},
     sheetState: SheetState = rememberModalBottomSheetState(),
 ) {
+    val imagePicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = {
+            it?.let(onPictureSelected)
+            onDismissRequest()
+        }
+    )
+
     ModalBottomSheet(
         modifier = modifier,
         sheetState = sheetState,
@@ -52,7 +64,9 @@ fun ProfilePictureOptionsModalBottomSheet(
         ProfileBottomSheetOptionItem(
             iconRes = R.drawable.ic_photo_library,
             label = R.string.common_upload_photo,
-            onClick = {}
+            onClick = {
+                imagePicker.launch("image/*")
+            }
         )
     }
 }

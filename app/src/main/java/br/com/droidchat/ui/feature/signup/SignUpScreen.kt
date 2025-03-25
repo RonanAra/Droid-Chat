@@ -1,5 +1,6 @@
 package br.com.droidchat.ui.feature.signup
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,10 +15,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +37,7 @@ import br.com.droidchat.ui.components.ProfilePictureSelector
 import br.com.droidchat.ui.components.SecondaryTextField
 import br.com.droidchat.ui.theme.BackgroundGradient
 import br.com.droidchat.ui.theme.DroidChatTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpRoute() {
@@ -82,11 +86,16 @@ fun SignUpContent() {
         modifier = Modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val scope = rememberCoroutineScope()
         var openProfilePictureOptionsModalBottomSheet by remember {
             mutableStateOf(false)
         }
 
-        ProfilePictureSelector {
+        var pictureSelected by remember { mutableStateOf<Uri?>(null) }
+
+        ProfilePictureSelector(
+            imageUri = pictureSelected
+        ) {
             openProfilePictureOptionsModalBottomSheet = true
         }
 
@@ -138,8 +147,20 @@ fun SignUpContent() {
             onClick = {}
         )
 
+        val sheetState = rememberModalBottomSheetState()
         if (openProfilePictureOptionsModalBottomSheet) {
             ProfilePictureOptionsModalBottomSheet(
+                sheetState = sheetState,
+                onPictureSelected = { uri ->
+                    pictureSelected = uri
+                    scope.
+                    launch { sheetState.hide() }
+                        .invokeOnCompletion {
+                        if (!sheetState.isVisible) {
+                            openProfilePictureOptionsModalBottomSheet = false
+                        }
+                    }
+                },
                 onDismissRequest = {
                     openProfilePictureOptionsModalBottomSheet = false
                 }
