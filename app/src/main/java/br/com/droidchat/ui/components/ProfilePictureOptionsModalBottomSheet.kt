@@ -2,6 +2,7 @@
 
 package br.com.droidchat.ui.components
 
+import android.content.Context
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,6 +24,10 @@ import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import br.com.droidchat.DroidChatFileProvider
 import br.com.droidchat.ui.theme.DroidChatTheme
 
 @Composable
@@ -40,12 +46,24 @@ fun ProfilePictureOptionsModalBottomSheet(
     onDismissRequest: () -> Unit,
     onPictureSelected: (Uri) -> Unit = {},
     sheetState: SheetState = rememberModalBottomSheetState(),
+    context: Context = LocalContext.current,
 ) {
+    var photoUri by remember { mutableStateOf<Uri?>(null) }
+
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = {
             it?.let(onPictureSelected)
             onDismissRequest()
+        }
+    )
+
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture(),
+        onResult = { success ->
+            if (success) {
+                photoUri?.let { onPictureSelected(it) }
+            }
         }
     )
 
@@ -59,7 +77,10 @@ fun ProfilePictureOptionsModalBottomSheet(
         ProfileBottomSheetOptionItem(
             iconRes = R.drawable.ic_photo_camera,
             label = R.string.common_take_photo,
-            onClick = {}
+            onClick = {
+                photoUri = DroidChatFileProvider.getImageUri(context.applicationContext)
+                photoUri?.let { cameraLauncher.launch(it) }
+            }
         )
         ProfileBottomSheetOptionItem(
             iconRes = R.drawable.ic_photo_library,

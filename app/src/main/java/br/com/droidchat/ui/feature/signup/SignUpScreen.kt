@@ -153,8 +153,8 @@ fun SignUpContent() {
                 sheetState = sheetState,
                 onPictureSelected = { uri ->
                     pictureSelected = uri
-                    scope.
-                    launch { sheetState.hide() }
+                    scope
+                        .launch { sheetState.hide() }
                         .invokeOnCompletion {
                         if (!sheetState.isVisible) {
                             openProfilePictureOptionsModalBottomSheet = false
